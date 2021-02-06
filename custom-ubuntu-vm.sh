@@ -36,16 +36,16 @@ apt autoclean -y
 
 
 ## Add primary user
-sudo adduser taylor
+sudo adduser wilson
 
 ## sudoers.d file for passwordless sudo
-cat > /etc/sudoers.d/010_taylor-nopasswd <<EOF
-taylor ALL=(ALL) NOPASSWD: ALL
+cat > /etc/sudoers.d/010_wilson-nopasswd <<EOF
+wilson ALL=(ALL) NOPASSWD: ALL
 EOF
 
-mkdir /home/taylor/bin
-ln -s /home/taylor/bin /root/bin
-chown taylor:taylor -R /home/taylor/bin
+mkdir /home/wilson/bin
+ln -s /home/wilson/bin /root/bin
+chown wilson:wilson -R /home/wilson/bin
 
 ## Improve nano syntax highlighting
 sudo git clone https://github.com/scopatz/nanorc.git /usr/share/nano-syntax-highlighting
@@ -61,14 +61,14 @@ sed -i "s/#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:l
 echo 'PATH="$HOME/bin:/home/taylor/bin:/usr/local/bin:/usr/bin:$PATH"' >> /root/.bashrc
 
 
-## Add color to the terminal interface (user Taylor)
-sed -i "s/#force_color_prompt=yes/force_color_prompt=yes/" /home/taylor/.bashrc
+## Add color to the terminal interface (user Wilson)
+sed -i "s/#force_color_prompt=yes/force_color_prompt=yes/" /home/wilson/.bashrc
 sed -i "s/#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'/export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'/" /home/taylor/.bashrc
 
 
-## Custom additions to ~/.bashrc (user Taylor)
-echo 'PATH="$HOME/bin:/root/bin:$PATH"' >> /home/taylor/.bashrc
-chown taylor:taylor /home/taylor/.bashrc
+## Custom additions to ~/.bashrc (user Wilson)
+echo 'PATH="$HOME/bin:/root/bin:$PATH"' >> /home/wilson/.bashrc
+chown wilson:wilson /home/wilson/.bashrc
 
 ## Create ~/.bash_aliases (user root)
 cat > /root/.bash_aliases <<EOF
@@ -117,29 +117,6 @@ alias folders='find . -maxdepth 1 -type d -print | xargs du -sk | sort -rn'
 
 ########################### Program Specific Aliases ###############################
 
-## Name: Asciinema
-## URL: https://github.com/asciinema/asciinema
-alias asciinema-rec='asciinema rec -w 2.5 /mnt/nfs/nas/ProxMox/asciinema/recordings'
-alias asciinema-stop='chown -R 1000:1004 /mnt/nfs/nas/ProxMox/asciinema'
-
-
-## Name: Asciinema Server
-## URL: https://github.com/asciinema/asciinema-server
-alias asciinema-srv-up='cd /opt/asciinema-server && docker-compose up -d'
-alias asciinema-srv-down='cd /opt/asciinema-server && docker-compose down'
-alias asciinema-srv-status="docker ps -f 'name=asciinema_'"
-alias asciinema-srv-upgrade='cd /opt/asciinema-server && docker-compose down && git fetch origin && git merge origin/master && docker-compose run --rm phoenix upgrade && docker-compose up -d'
-
-
-## Name: DockSTARTer
-## URL: https://github.com/GhostWriters/DockSTARTer
-alias dockstart-update='sudo bash ~/.docker/main.sh -u'
-alias dockstart-up='sudo bash ~/.docker/main.sh -g'
-alias dockstart-down='cd ~/.docker/compose && sudo docker-compose down'
-alias dockstart-env='nano /home/taylor/.docker/compose/.env'
-alias dockstart-compose='nano /home/taylor/.docker/compose/docker-compose.yml'
-
-
 ## Caddy command
 alias caddy-edit="nano /home/caddy/Caddyfile"
 alias caddy-start="sudo systemctl start caddy.service"
@@ -160,8 +137,8 @@ alias confluence-stop='sudo /bin/bash /opt/atlassian/confluence/bin/stop-conflue
 EOF
 
 
-## Creating bash aliases (user Taylor)
-cat > /home/taylor/.bash_aliases <<EOF
+## Creating bash aliases (user Wilson)
+cat > /home/wilson/.bash_aliases <<EOF
 ################################ Bash Aliases ####################################
 ############################## ~/.bash_aliases ###################################
 
@@ -193,10 +170,6 @@ alias sai='sudo aptitude install'
 alias sclean='sudo apt autoclean && sudo apt autoremove'
 
 
-## ZFS management
-alias zfs-listss="zfs list -o name -H -t snapshot -r"
-
-
 ## Print sorted disk usage for current directory
 alias diskspace='du -S | sort -n -r |more'
 
@@ -207,29 +180,6 @@ alias folders='find . -maxdepth 1 -type d -print | xargs du -sk | sort -rn'
 
 
 ########################### Program Specific Aliases ###############################
-
-## Name: Asciinema
-## URL: https://github.com/asciinema/asciinema
-alias asciinema-rec='asciinema rec -w 2.5 /mnt/nfs/nas/ProxMox/asciinema/recordings'
-alias asciinema-stop='chown -R 1000:1004 /mnt/nfs/nas/ProxMox/asciinema'
-
-
-## Name: Asciinema Server
-## URL: https://github.com/asciinema/asciinema-server
-alias asciinema-srv-up='cd /opt/asciinema-server && docker-compose up -d'
-alias asciinema-srv-down='cd /opt/asciinema-server && docker-compose down'
-alias asciinema-srv-status="docker ps -f 'name=asciinema_'"
-alias asciinema-srv-upgrade='cd /opt/asciinema-server && docker-compose down && git fetch origin && git merge origin/master && docker-compose run --rm phoenix upgrade && docker-compose up -d'
-
-
-## Name: DockSTARTer
-## URL: https://github.com/GhostWriters/DockSTARTer
-alias dockstart-update='sudo bash ~/.docker/main.sh -u'
-alias dockstart-up='sudo bash ~/.docker/main.sh -g'
-alias dockstart-down='cd ~/.docker/compose && sudo docker-compose down'
-alias dockstart-env='nano /home/taylor/.docker/compose/.env'
-alias dockstart-compose='nano /home/taylor/.docker/compose/docker-compose.yml'
-
 
 ## Caddy command
 alias caddy-edit="nano /home/caddy/Caddyfile"
@@ -249,7 +199,7 @@ alias update-mediawiki="cd /var/www/mediawiki && php maintenance/update.php --do
 alias confluence-start='sudo /bin/bash /opt/atlassian/confluence/bin/start-confluence.sh'
 alias confluence-stop='sudo /bin/bash /opt/atlassian/confluence/bin/stop-confluence.sh'
 EOF
-chown taylor:taylor /home/taylor/.bash_aliases
+chown wilson:wilson /home/wilson/.bash_aliases
 
 ## File sharing
 sudo aptitude install -y samba \
@@ -306,7 +256,7 @@ mkdir -p /mnt/usb/media2
 mkdir -p /mnt/usb/media3
 mkdir -p /mnt/usb/seagate-backup
 mkdir -p /mnt/usb/toshiba-1tb
-chown taylor:taylor -R /mnt/nas /mnt/storage /mnt/usb
+chown wilson:wilson -R /mnt/nas /mnt/storage /mnt/usb
 
 ## Custom samba
 cat >> /etc/samba/smb.conf <<EOF
