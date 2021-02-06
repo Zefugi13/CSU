@@ -207,57 +207,6 @@ sudo aptitude install -y samba \
 	nfs-common
 
 
-## Update /etc/fstab
-cat >> /etc/fstab <<EOF
-######################################################################################################
-################################### NFSv4 from Synology NAS ##########################################
-######################################################################################################
-#
-#192.168.1.223:/volume1                  /mnt/nas/volume1   nfs4  rsize=32768,wsize=32768,timeo=14,intr
-#192.168.1.223:/volume1/download         /mnt/nas/download  nfs4  rsize=32768,wsize=32768,timeo=14,intr
-#192.168.1.223:/volume1/media            /mnt/nas/media     nfs4  rsize=32768,wsize=32768,timeo=14,intr
-#192.168.1.223:/volume1/ProxMox/backups  /mnt/nas/backup    nfs4  rsize=32768,wsize=32768,timeo=14,intr
-#
-######################################################################################################
-#
-#
-######################################################################################################
-########################### NFSv4 mounts from ProxMox Skull Canyon Host ##############################
-######################################################################################################
-#
-#192.168.1.100:/storage           /mnt/storage              nfs4  rsize=32768,wsize=32768,timeo=14,intr
-#192.168.1.100:/seagate-media     /mnt/usb/media            nfs4  rsize=32768,wsize=32768,timeo=14,intr
-#192.168.1.100:/seagate-e         /mnt/usb/media2           nfs4  rsize=32768,wsize=32768,timeo=14,intr
-#192.168.1.100:/seagate-4         /mnt/usb/media3           nfs4  rsize=32768,wsize=32768,timeo=14,intr
-#192.168.1.100:/seagate-backups   /mnt/usb/seagate-backup   nfs4  rsize=32768,wsize=32768,timeo=14,intr
-#192.168.1.100:/toshiba-1tb       /mnt/usb/toshiba-1tb      nfs4  rsize=32768,wsize=32768,timeo=14,intr
-#
-######################################################################################################
-#
-#
-######################################################################################################
-###################################### Plex RAM Transcoding ##########################################
-######################################################################################################
-#
-#tmpfs    /tmp    tmpfs    defaults,noatime,nosuid,nodev,noexec,size=64G,mode=1777    0    0
-#
-######################################################################################################
-EOF
-
-
-## Add paths for all fstab entries
-mkdir -p /mnt/nas/volume1
-mkdir -p /mnt/nas/download
-mkdir -p /mnt/nas/media
-mkdir -p /mnt/nas/backup
-mkdir -p /mnt/storage
-mkdir -p /mnt/usb/media
-mkdir -p /mnt/usb/media2
-mkdir -p /mnt/usb/media3
-mkdir -p /mnt/usb/seagate-backup
-mkdir -p /mnt/usb/toshiba-1tb
-chown wilson:wilson -R /mnt/nas /mnt/storage /mnt/usb
-
 ## Custom samba
 cat >> /etc/samba/smb.conf <<EOF
 [root directory]
